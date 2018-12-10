@@ -3,6 +3,8 @@ package by.grodno.porokhonkoevgeniy;
 import by.grodno.porokhonkoevgeniy.arrays.ArrayType;
 import by.grodno.porokhonkoevgeniy.arrays.ArrayTypeA;
 import by.grodno.porokhonkoevgeniy.arrays.ArrayTypeB;
+import by.grodno.porokhonkoevgeniy.arrays.ArrayTypeC;
+import by.grodno.porokhonkoevgeniy.utils.StringResources;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +20,7 @@ class ParameterForArray {
         mTypeArrayMap = new HashMap<>();
         mTypeArrayMap.put("A", new ArrayTypeA());
         mTypeArrayMap.put("B", new ArrayTypeB());
+        mTypeArrayMap.put("C", new ArrayTypeC());
         getSizeAndTypeForArray();
     }
 
@@ -26,12 +29,12 @@ class ParameterForArray {
         int height;
 //        get length
         do {
-            length = readFromConsoleInteger("Please, enter length, not more 10: ");
+            length = readFromConsoleInteger(StringResources.MATRIX_LENGTH);
             //  in the task we need to get the number 0 to 10
         } while (length < 0 || length > 10);
 //        get height
         do {
-            height = readFromConsoleInteger("Please enter height, not more 10: ");
+            height = readFromConsoleInteger(StringResources.MATRIX_HEIGHT);
         } while (height < 0 || height > 10);
 //        get type of array
         do {
@@ -43,7 +46,7 @@ class ParameterForArray {
 
     private ArrayType readTypeFromConsole() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please enter matrix type, A or B: ");
+        System.out.println(StringResources.MATRIX_TYPE);
         try {
             mArrayCreator = mTypeArrayMap.get(br.readLine());
         } catch (IOException pE) {
