@@ -1,8 +1,8 @@
 package by.grodno.porokhonkoevgeniy.arrays;
 
-public class ArrayTypeC extends ArrayType {
+public class ArrayTypeC implements IArrayType {
     @Override
-    public void sizeOfArray(int pLength, int pHeight) {
+    public int[][] generateArray(int pLength, int pHeight) {
         int[][] matrix = new int[pHeight][pLength];
         for (int step = 0, a = 0, size; step < pHeight/2; step++) {
             size = (pHeight - step * 2 - 1);
@@ -32,6 +32,6 @@ public class ArrayTypeC extends ArrayType {
                 matrix[pHeight/2][pLength/2] = pHeight * pLength;
             }
         }
-        super.writeArrayToConsole(matrix, pLength, pHeight);
+        return matrix;
     }
 }

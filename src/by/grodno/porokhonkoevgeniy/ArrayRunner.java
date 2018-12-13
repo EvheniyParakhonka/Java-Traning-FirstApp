@@ -1,54 +1,63 @@
 package by.grodno.porokhonkoevgeniy;
 
-import by.grodno.porokhonkoevgeniy.arrays.ArrayType;
 import by.grodno.porokhonkoevgeniy.arrays.ArrayTypeA;
 import by.grodno.porokhonkoevgeniy.arrays.ArrayTypeB;
 import by.grodno.porokhonkoevgeniy.arrays.ArrayTypeC;
+import by.grodno.porokhonkoevgeniy.arrays.IArrayType;
 import by.grodno.porokhonkoevgeniy.utils.StringResources;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 
-class ParameterForArray {
-    private Map<String, ArrayType> mTypeArrayMap;
-    private ArrayType mArrayCreator;
+class ArrayRunner {
+    private IArrayType mArrayCreator;
+    private int mLength;
+    private int mHeight;
 
-    ParameterForArray() {
-        mTypeArrayMap = new HashMap<>();
-        mTypeArrayMap.put("A", new ArrayTypeA());
-        mTypeArrayMap.put("B", new ArrayTypeB());
-        mTypeArrayMap.put("C", new ArrayTypeC());
+    ArrayRunner() {
+    }
+
+    void run() {
         getSizeAndTypeForArray();
     }
 
     private void getSizeAndTypeForArray() {
-        int length;
-        int height;
-//        get length
+        //        get length
         do {
-            length = readFromConsoleInteger(StringResources.MATRIX_LENGTH);
+            mLength = readFromConsoleInteger(StringResources.MATRIX_LENGTH);
             //  in the task we need to get the number 0 to 10
-        } while (length < 0 || length > 10);
+        } while (mLength < 0 || mLength > 10);
 //        get height
         do {
-            height = readFromConsoleInteger(StringResources.MATRIX_HEIGHT);
-        } while (height < 0 || height > 10);
+            mHeight = readFromConsoleInteger(StringResources.MATRIX_HEIGHT);
+        } while (mHeight < 0 || mHeight > 10);
 //        get type of array
         do {
             mArrayCreator = readTypeFromConsole();
         } while (mArrayCreator == null);
 
-        mArrayCreator.sizeOfArray(length, height);
+        writeArrayToConsole(mArrayCreator.generateArray(mLength, mHeight));
     }
 
-    private ArrayType readTypeFromConsole() {
+    private IArrayType readTypeFromConsole() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(StringResources.MATRIX_TYPE);
         try {
-            mArrayCreator = mTypeArrayMap.get(br.readLine());
+            switch (br.readLine()) {
+                case "A":
+                    mArrayCreator = new ArrayTypeA();
+                    break;
+                case "B":
+                    mArrayCreator = new ArrayTypeB();
+                    break;
+                case "C":
+                    mArrayCreator = new ArrayTypeC();
+                    break;
+                default:
+                    mArrayCreator = null;
+                    break;
+            }
         } catch (IOException pE) {
             System.err.println("IOException: " + pE);
             readTypeFromConsole();
@@ -70,5 +79,14 @@ class ParameterForArray {
             return -1;
         }
         return i;
+    }
+
+    private void writeArrayToConsole(int[][] arr) {
+        for (int i = 0; i < mHeight; i++) {
+            System.out.println(" ");
+            for (int j = 0; j < mLength; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+        }
     }
 }

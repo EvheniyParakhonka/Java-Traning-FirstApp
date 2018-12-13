@@ -1,8 +1,8 @@
 package by.grodno.porokhonkoevgeniy.arrays;
 
-public class ArrayTypeB extends ArrayType {
+public class ArrayTypeB implements IArrayType {
     @Override
-    public void sizeOfArray(int pLength, int pHeight) {
+    public int[][] generateArray(int pLength, int pHeight) {
         int[][] arr = new int[pHeight * 2][pLength * 2];
 
         for (int i = 0; i < arr.length; i++) {
@@ -25,6 +25,6 @@ public class ArrayTypeB extends ArrayType {
                 arr[i][j] = Math.min(ii, ij);
             }
         }
-        super.writeArrayToConsole(arr, pLength, pHeight);
+        return arr;
     }
 }
